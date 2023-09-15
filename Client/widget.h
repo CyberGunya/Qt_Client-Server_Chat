@@ -15,11 +15,15 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
+
 public slots:
     void connection_check();
+    void on_SEND_clicked();
+    void readFromServer();
 
 private:
     Ui::Widget *ui;
     QTcpSocket* socket;
+    QByteArray data;
 };
 #endif // WIDGET_H
