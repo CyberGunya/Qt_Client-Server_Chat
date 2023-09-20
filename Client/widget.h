@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTcpSocket>
+#include <QDateTime>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -15,6 +16,7 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
+    void print_msg(QString text);
 
 public slots:
     void connection_check();
