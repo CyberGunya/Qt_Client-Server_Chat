@@ -11,10 +11,6 @@ public:
     qintptr receiver;
     QString text;
     QDateTime time;
-
-  /*  Message();
-    Message(qintptr,qintptr,QString,QDateTime);
-    ~Message();*/
 };
 
 #endif // MESSAGE_H
