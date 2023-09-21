@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QTcpSocket>
 #include <QDateTime>
+#include "../Message/Message.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }

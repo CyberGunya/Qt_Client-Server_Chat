@@ -4,6 +4,7 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <set>
+#include "../Message/Message.h"
 
 class ChatServer : public QTcpServer
 {
@@ -11,13 +12,17 @@ class ChatServer : public QTcpServer
     QTcpSocket* socket_sender;
     QTcpSocket* socket_reciever;
     QByteArray data;
+    QList<QTcpSocket*> users;
 public:
     ChatServer();
     ~ChatServer();
 public slots:
     void incomingConnection(qintptr socketDescriptor);
     void readFromClient();
-    void sendToClient(QString str);
+    void Notify(qintptr newbie);
+    void Send(Message msg);
+    QTcpSocket* Find(qintptr descriptor);
+    void disconnect();
  };
 
 #endif // CHAT_H

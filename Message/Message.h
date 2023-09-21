@@ -1,0 +1,20 @@
+#ifndef MESSAGE_H
+#define MESSAGE_H
+
+#include <QTcpSocket>
+#include <QDateTime>
+
+class Message
+{
+public:
+    qintptr sender;
+    qintptr receiver;
+    QString text;
+    QDateTime time;
+
+  /*  Message();
+    Message(qintptr,qintptr,QString,QDateTime);
+    ~Message();*/
+};
+
+#endif // MESSAGE_H
