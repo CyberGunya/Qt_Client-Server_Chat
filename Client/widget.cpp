@@ -28,19 +28,39 @@ void Widget::on_SEND_clicked()
     data.clear();
     QDataStream out(&data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_6_5);
-    out<<ui->lineEdit->text();
+        //Make a new message
+    Message msg;
+    msg.sender = 0;     //fix this one
+    msg.receiver = ui->comboBox->currentText().toInt();
+    msg.text = ui->lineEdit->text();
+    msg.time = QDateTime::currentDateTime();
+        //send it to server
+    out<<msg.sender<<msg.receiver<<msg.text<<msg.time;
     socket->write(data);
-    qDebug()<<"Message to "<<socket->socketDescriptor()<<" : "<<ui->lineEdit->text()<<"\n";
+    qDebug()<<"Message to "<<msg.receiver<<" : "<<ui->lineEdit->text()<<"\n";
 }
 
 void Widget::readFromServer()
 {
     QDataStream in(socket);
     in.setVersion(QDataStream::Qt_6_5);
-    if(in.status())
+    if(in.status()==QDataStream::Ok)
     {
-        QString msg;
-        in>>msg;
-        qDebug()<<"Message from "<<socket->socketDescriptor()<<" : "<<msg<<"\n";
+        Message msg;
+        while(in.status()==QDataStream::Ok)
+        {
+            in>>msg.sender>>msg.receiver>>msg.text>>msg.time;
+            if(msg.sender==-1)      //section for new users notifier
+            {
+                if(ui->comboBox->findText(msg.text)==-1 && msg.text!="")
+                {
+                    ui->comboBox->addItem(msg.text);
+                }
+            }
+            if(msg.text!="")        //fix this later
+            {
+                qDebug()<<"Message from "<<msg.sender<<" : "<<msg.text<<"\n";
+            }
+        }
     }
 }
